@@ -34,7 +34,6 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
       _currentNotes.insert(0, newNote);
       emit(NoteLoaded(notes: _currentNotes));
       emit(NoteSuccess(message: 'Note created successfully!'));
-      // Reload to remove success state
       emit(NoteLoaded(notes: _currentNotes));
     } catch (e) {
       emit(NoteError(message: e.toString()));

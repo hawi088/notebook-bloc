@@ -127,6 +127,7 @@ class NoteListScreen extends StatelessWidget {
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        // Edit button
                         IconButton(
                           icon: const Icon(Icons.edit, color: Colors.blue),
                           onPressed: () async {
@@ -144,6 +145,7 @@ class NoteListScreen extends StatelessWidget {
                             }
                           },
                         ),
+                        // Delete button
                         IconButton(
                           icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () async {

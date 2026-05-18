@@ -11,7 +11,7 @@ class AddNote extends NoteEvent {
 }
 
 class UpdateNote extends NoteEvent {
-  final int id;
+  final String id;  // Change from int to String
   final String title;
   final String body;
   UpdateNote({
@@ -22,6 +22,6 @@ class UpdateNote extends NoteEvent {
 }
 
 class DeleteNote extends NoteEvent {
-  final int id;
+  final String id;  // Change from int to String
   DeleteNote({required this.id});
 }

@@ -1,5 +1,5 @@
 class Note {
-  final int id;
+  final String id;  // Change from int to String
   final String title;
   final String body;
   final DateTime createdAt;
@@ -13,10 +13,10 @@ class Note {
 
   factory Note.fromJson(Map<String, dynamic> json) {
     return Note(
-      id: json['id'],
+      id: json['id'].toString(),  // Convert to String
       title: json['title'],
       body: json['body'],
-      createdAt: DateTime.now(),
+      createdAt: DateTime.parse(json['createdAt']),
     );
   }
 
@@ -24,12 +24,12 @@ class Note {
     return {
       'title': title,
       'body': body,
-      'userId': 1,
+      'createdAt': createdAt.toIso8601String(),
     };
   }
 
   Note copyWith({
-    int? id,
+    String? id,
     String? title,
     String? body,
     DateTime? createdAt,

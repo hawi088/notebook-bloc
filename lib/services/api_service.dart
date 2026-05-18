@@ -3,7 +3,8 @@ import '../models/note_model.dart';
 
 class ApiService {
   final Dio _dio = Dio(BaseOptions(
-    baseUrl: 'https://jsonplaceholder.typicode.com',
+    // Your MockAPI URL
+    baseUrl: 'https://6a0aa7d721e4456256963e9b.mockapi.io',
     connectTimeout: const Duration(seconds: 30),
     receiveTimeout: const Duration(seconds: 30),
     headers: {'Content-Type': 'application/json'},
@@ -12,12 +13,11 @@ class ApiService {
   // READ - Get all notes
   Future<List<Note>> getNotes() async {
     try {
-      final response = await _dio.get('/posts');
+      final response = await _dio.get('/notes');
       
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
-        List<Note> notes = data.map((json) => Note.fromJson(json)).toList();
-        return notes.take(10).toList();
+        return data.map((json) => Note.fromJson(json)).toList();
       } else {
         throw Exception('Failed to load notes: ${response.statusCode}');
       }
@@ -30,21 +30,16 @@ class ApiService {
   Future<Note> createNote(String title, String body) async {
     try {
       final response = await _dio.post(
-        '/posts',
+        '/notes',
         data: {
           'title': title,
           'body': body,
-          'userId': 1,
+          'createdAt': DateTime.now().toIso8601String(),
         },
       );
       
       if (response.statusCode == 201) {
-        return Note(
-          id: response.data['id'],
-          title: response.data['title'],
-          body: response.data['body'],
-          createdAt: DateTime.now(),
-        );
+        return Note.fromJson(response.data);
       } else {
         throw Exception('Failed to create note: ${response.statusCode}');
       }
@@ -54,25 +49,19 @@ class ApiService {
   }
 
   // UPDATE - Edit note
-  Future<Note> updateNote(int id, String title, String body) async {
+  Future<Note> updateNote(String id, String title, String body) async {
     try {
       final response = await _dio.put(
-        '/posts/$id',
+        '/notes/$id',
         data: {
-          'id': id,
           'title': title,
           'body': body,
-          'userId': 1,
+          'createdAt': DateTime.now().toIso8601String(),
         },
       );
       
       if (response.statusCode == 200) {
-        return Note(
-          id: response.data['id'],
-          title: response.data['title'],
-          body: response.data['body'],
-          createdAt: DateTime.now(),
-        );
+        return Note.fromJson(response.data);
       } else {
         throw Exception('Failed to update note: ${response.statusCode}');
       }
@@ -82,11 +71,13 @@ class ApiService {
   }
 
   // DELETE - Remove note
-  Future<void> deleteNote(int id) async {
+  Future<void> deleteNote(String id) async {
     try {
-      final response = await _dio.delete('/posts/$id');
+      final response = await _dio.delete('/notes/$id');
       
-      if (response.statusCode != 200 && response.statusCode != 204) {
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        return;
+      } else {
         throw Exception('Failed to delete note: ${response.statusCode}');
       }
     } on DioException catch (e) {
