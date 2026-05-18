@@ -1,4 +1,4 @@
-# Flutter/Dart
+# Flutter/Dart build artifacts
 .dart_tool/
 .build/
 .flutter-plugins
@@ -6,31 +6,23 @@
 .pub/
 .pub-cache/
 .packages
-*.lock
 
-# Android
-android/
+# Android build artifacts (but keep android folder)
+android/app/debug/
+android/app/profile/
+android/app/release/
+android/.gradle/
+*.imll
 *.iml
 .gradle/
 local.properties
 
-# iOS
-ios/
+# iOS build artifacts (but keep ios folder)
+ios/.symlinks/
+ios/Pods/
 Podfile
 Podfile.lock
 Pods/
-
-# Web
-web/
-
-# Linux
-linux/
-
-# MacOS
-macos/
-
-# Windows
-windows/
 
 # IDE
 .idea/
@@ -46,3 +38,4 @@ generated_plugin_registrant.dart
 # Other
 .DS_Store
 *.log
+*.lock
